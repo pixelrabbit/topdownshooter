@@ -1,4 +1,4 @@
-import { Assets, Container, Ticker, Graphics, FederatedPointerEvent, Rectangle } from 'pixi.js';
+import { Assets, Container, Ticker, Graphics, FederatedPointerEvent, Rectangle, TilingSprite } from 'pixi.js';
 import { Player } from './player';
 import { HUD, Minimap } from './hud';
 import { Enemy } from './enemy';
@@ -17,8 +17,8 @@ export class GameStage extends Container {
   private minimap: Minimap;
   private readonly screenWidth: number;
   private readonly screenHeight: number;
-  private readonly worldWidth = 6000;
-  private readonly worldHeight = 6000;
+  private readonly worldWidth = 2400;
+  private readonly worldHeight = 1600;
   private world: Container;
 
   constructor(screenWidth: number, screenHeight: number) {
@@ -27,6 +27,7 @@ export class GameStage extends Container {
     this.screenHeight = screenHeight;
 
     this.world = new Container();
+
     this.addChild(this.world);
 
     this.hud = new HUD();
@@ -50,18 +51,27 @@ export class GameStage extends Container {
   }
 
   public async setup(): Promise<void> {
-    // Add a background grid to the world
-    const grid = new Graphics();
-    grid.lineStyle(2, 0xcccccc, 0.5);
-    for (let i = 0; i < this.worldWidth; i += 100) {
-      grid.moveTo(i, 0);
-      grid.lineTo(i, this.worldHeight);
-    }
-    for (let i = 0; i < this.worldHeight; i += 100) {
-      grid.moveTo(0, i);
-      grid.lineTo(this.worldWidth, i);
-    }
-    this.world.addChild(grid);
+    // Add repeating grass background
+    const grassTexture = await Assets.load('assets/grass.jpg');
+    const background = new TilingSprite({
+      texture: grassTexture,
+      width: this.worldWidth,
+      height: this.worldHeight,
+    });
+    this.world.addChild(background);
+
+    // // Add a background grid to the world
+    // const grid = new Graphics();
+    // grid.lineStyle(2, 0xcccccc, 0.5);
+    // for (let i = 0; i < this.worldWidth; i += 100) {
+    //   grid.moveTo(i, 0);
+    //   grid.lineTo(i, this.worldHeight);
+    // }
+    // for (let i = 0; i < this.worldHeight; i += 100) {
+    //   grid.moveTo(0, i);
+    //   grid.lineTo(this.worldWidth, i);
+    // }
+    // this.world.addChild(grid);
 
     // Load the bunny player
     const texture = await Assets.load('https://pixijs.com/assets/bunny.png');
@@ -79,6 +89,8 @@ export class GameStage extends Container {
       { x: 900, y: 600, w: 120, h: 120 },
     ];
     this.createObstacles(obstacleData);
+
+    this.minimap.setObstacles(this.obstacles);
 
     // ENEMIES
     const numEnemies = 1;

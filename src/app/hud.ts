@@ -4,6 +4,7 @@ import type { Player } from './player';
 export class Minimap extends Container {
   private cameraRect: Graphics;
   private playerDot: Graphics;
+  private obstacleContainer: Container;
 
   private readonly worldWidth: number;
   private readonly screenWidth: number;
@@ -29,6 +30,10 @@ export class Minimap extends Container {
       .fill({ color: 0x111111, alpha: 0.66 });
     this.addChild(minimapBg);
 
+    // Container for obstacles
+    this.obstacleContainer = new Container();
+    this.addChild(this.obstacleContainer);
+
     // Calculate scale - assuming world is square for simplicity
     this.minimapScale = this.minimapWidth / this.worldWidth;
 
@@ -43,6 +48,21 @@ export class Minimap extends Container {
       .circle(0, 0, 2)
       .fill({ color: 0x00ff00 }); // Green dot for player
     this.addChild(this.playerDot);
+  }
+
+  public setObstacles(obstacles: Graphics[]): void {
+    this.obstacleContainer.removeChildren();
+    for (const obstacle of obstacles) {
+      const obstacleRep = new Graphics()
+        .rect(
+          obstacle.x * this.minimapScale,
+          obstacle.y * this.minimapScale,
+          obstacle.width * this.minimapScale,
+          obstacle.height * this.minimapScale,
+        )
+        .fill({ color: 0x888888 }); // Grey for obstacles
+      this.obstacleContainer.addChild(obstacleRep);
+    }
   }
 
   public update(player: Player, camera: Container): void {
