@@ -44,9 +44,7 @@ export class Minimap extends Container {
     this.addChild(this.cameraRect);
 
     // Player dot
-    this.playerDot = new Graphics()
-      .circle(0, 0, 2)
-      .fill({ color: 0x00ff00 }); // Green dot for player
+    this.playerDot = new Graphics().circle(0, 0, 2).fill({ color: 0x00ff00 }); // Green dot for player
     this.addChild(this.playerDot);
   }
 
@@ -58,7 +56,7 @@ export class Minimap extends Container {
           obstacle.x * this.minimapScale,
           obstacle.y * this.minimapScale,
           obstacle.width * this.minimapScale,
-          obstacle.height * this.minimapScale,
+          obstacle.height * this.minimapScale
         )
         .fill({ color: 0x888888 }); // Grey for obstacles
       this.obstacleContainer.addChild(obstacleRep);
@@ -84,8 +82,6 @@ export class Minimap extends Container {
 }
 
 export class HUD extends Container {
-
-
   constructor() {
     super();
 
@@ -110,11 +106,10 @@ export class HUD extends Container {
     const startX = 0;
 
     for (let i = 0; i < 4; i++) {
-      const square = new Graphics().rect(startX + (squareSize + spacing) * i, 24, squareSize, squareSize).fill({ color: 0xff0000 });
+      const square = new Graphics()
+        .rect(startX + (squareSize + spacing) * i, 24, squareSize, squareSize)
+        .fill({ color: 0xff0000 });
       background.addChild(square);
     }
-
   }
-
-
 }

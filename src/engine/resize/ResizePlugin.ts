@@ -1,10 +1,5 @@
 import { ExtensionType } from "pixi.js";
-import type {
-  Application,
-  ApplicationOptions,
-  ExtensionMetadata,
-  ResizePluginOptions,
-} from "pixi.js";
+import type { Application, ApplicationOptions, ExtensionMetadata, ResizePluginOptions } from "pixi.js";
 
 import { resize } from "./resize";
 
@@ -72,7 +67,7 @@ export class CreationResizePlugin {
         get() {
           return this._resizeTo;
         },
-      },
+      }
     );
 
     /**
@@ -124,7 +119,7 @@ export class CreationResizePlugin {
         canvasHeight,
         app.resizeOptions.minWidth,
         app.resizeOptions.minHeight,
-        app.resizeOptions.letterbox,
+        app.resizeOptions.letterbox
       );
 
       app.renderer.canvas.style.width = `${canvasWidth}px`;
@@ -148,8 +143,7 @@ export class CreationResizePlugin {
       letterbox: true,
       ...options.resizeOptions,
     };
-    app.resizeTo =
-      options.resizeTo || (null as unknown as Window | HTMLElement);
+    app.resizeTo = options.resizeTo || (null as unknown as Window | HTMLElement);
   }
 
   /**

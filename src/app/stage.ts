@@ -11,7 +11,7 @@ interface ObstacleData {
 }
 
 export class GameStage extends Container {
-  private player!: Player;  //TODO: understand exclamation point
+  private player!: Player; //TODO: understand exclamation point
   private enemies: Enemy[] = [];
   private readonly enemiesNumber = 0;
   private hud: HUD;
@@ -21,7 +21,6 @@ export class GameStage extends Container {
   private readonly worldWidth = 2400;
   private readonly worldHeight = 1600;
   private world: Container;
-
 
   constructor(screenWidth: number, screenHeight: number) {
     super();
@@ -113,19 +112,14 @@ export class GameStage extends Container {
   private obstacles: Graphics[] = [];
   private createObstacles(obstacleData: ObstacleData[]): void {
     obstacleData.forEach((data: ObstacleData) => {
-      const obstacle = new Graphics()
-        .rect(0, 0, data.w, data.h)
-        .stroke({ width: 4, color: 0x000000 })
+      const obstacle = new Graphics().rect(0, 0, data.w, data.h).stroke({ width: 4, color: 0x000000 });
       obstacle.x = data.x;
       obstacle.y = data.y;
 
       this.obstacles.push(obstacle);
       this.world.addChild(obstacle);
     });
-
   }
-
-
 
   private handleCollisions(dt: number): void {
     if (!this.player) return;
@@ -172,7 +166,11 @@ export class GameStage extends Container {
           }
         }
 
-        if (hitPlayer || bullet.isOutOfBounds(this.worldWidth, this.worldHeight) || bullet.isColliding(this.obstacles)) {
+        if (
+          hitPlayer ||
+          bullet.isOutOfBounds(this.worldWidth, this.worldHeight) ||
+          bullet.isColliding(this.obstacles)
+        ) {
           this.world.removeChild(bullet);
           enemy.bullets.splice(i, 1);
         }
@@ -182,7 +180,7 @@ export class GameStage extends Container {
 
   public update(ticker: Ticker): void {
     this.player?.update(ticker, this.worldWidth, this.worldHeight, this.obstacles, this.enemies); // The '?' handles if player is null
-    this.enemies.forEach(enemy => {
+    this.enemies.forEach((enemy) => {
       enemy.update(ticker, this.worldWidth, this.worldHeight, this.obstacles);
     });
 

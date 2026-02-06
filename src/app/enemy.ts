@@ -4,11 +4,13 @@ import { Player } from "./player";
 import { Character } from "./character";
 import { colors } from "./variables";
 
-
 export class Enemy extends Character {
   private pursuitRadius = 600;
 
-  constructor(texture: Texture, private player: Player) {
+  constructor(
+    texture: Texture,
+    private player: Player
+  ) {
     super(texture, 2, 2000, 0xff0000, 2); // speed, fireRate, hitboxColor, health
   }
 
@@ -27,10 +29,12 @@ export class Enemy extends Character {
     const enemyBounds = this.getHitbox();
     const playerBounds = this.player.getHitbox();
 
-    return enemyBounds.x < playerBounds.x + playerBounds.width &&
+    return (
+      enemyBounds.x < playerBounds.x + playerBounds.width &&
       enemyBounds.x + enemyBounds.width > playerBounds.x &&
       enemyBounds.y < playerBounds.y + playerBounds.height &&
-      enemyBounds.y + enemyBounds.height > playerBounds.y;
+      enemyBounds.y + enemyBounds.height > playerBounds.y
+    );
   }
 
   public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Graphics[]) {
@@ -46,7 +50,8 @@ export class Enemy extends Character {
     const distance = Math.sqrt(dx * dx + dy * dy);
 
     // Only move if the player is within the pursuit radius
-    if (distance > 0 && distance < this.pursuitRadius) { // Avoid division by zero
+    if (distance > 0 && distance < this.pursuitRadius) {
+      // Avoid division by zero
       const normalizedDx = dx / distance;
       const normalizedDy = dy / distance;
 
@@ -66,10 +71,10 @@ export class Enemy extends Character {
     this.keepInBounds(worldWidth, worldHeight);
 
     // Firing logic
-    if (distance > 50 && Date.now() - this.lastFired > this.fireRate) { // Don't fire if too close
+    if (distance > 50 && Date.now() - this.lastFired > this.fireRate) {
+      // Don't fire if too close
       this.fire();
       this.lastFired = Date.now();
     }
-
   }
 }

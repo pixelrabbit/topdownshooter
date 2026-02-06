@@ -27,8 +27,7 @@ function mulberry32(a: number): () => number {
   };
 }
 
-const HASH_CHARSET =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+const HASH_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 /**
  * Creates a seeded random function similar to Math.random() based on given seed hash
@@ -56,11 +55,7 @@ export function randomColor(random = Math.random): number {
  * @param max - highest number (exclusive)
  * @param random - The random function to be used (defaults to Math.random)
  */
-export function randomRange(
-  min: number,
-  max: number,
-  random = Math.random,
-): number {
+export function randomRange(min: number, max: number, random = Math.random): number {
   const a = Math.min(min, max);
   const b = Math.max(min, max);
 
@@ -122,11 +117,7 @@ export function randomShuffle<T>(array: T[], random = Math.random): T[] {
  * @param random - The random function to be used (defaults to Math.random)
  * @returns
  */
-export function randomHash(
-  length: number,
-  random = Math.random,
-  charset = HASH_CHARSET,
-): string {
+export function randomHash(length: number, random = Math.random, charset = HASH_CHARSET): string {
   const charsetLength = charset.length;
   let result = "";
 

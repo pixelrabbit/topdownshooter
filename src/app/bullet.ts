@@ -20,30 +20,31 @@ export class Bullet extends Graphics {
   }
 
   public isOutOfBounds(width: number, height: number): boolean {
-    return (
-      this.x < -50 || this.x > width + 50 ||
-      this.y < -50 || this.y > height + 50
-    );
+    return this.x < -50 || this.x > width + 50 || this.y < -50 || this.y > height + 50;
   }
 
   public isCollidingWithCharacter(character: Character): boolean {
     const bulletBounds = this.getBounds().rectangle;
     const characterBounds = character.getHitbox();
 
-    return bulletBounds.x < characterBounds.x + characterBounds.width &&
+    return (
+      bulletBounds.x < characterBounds.x + characterBounds.width &&
       bulletBounds.x + bulletBounds.width > characterBounds.x &&
       bulletBounds.y < characterBounds.y + characterBounds.height &&
-      bulletBounds.y + bulletBounds.height > characterBounds.y;
+      bulletBounds.y + bulletBounds.height > characterBounds.y
+    );
   }
 
   public isColliding(obstacles: Graphics[]): boolean {
     const bulletBounds = this.getBounds().rectangle;
     for (const obstacle of obstacles) {
       const obstacleBounds = obstacle.getBounds().rectangle;
-      if (bulletBounds.x < obstacleBounds.x + obstacleBounds.width &&
+      if (
+        bulletBounds.x < obstacleBounds.x + obstacleBounds.width &&
         bulletBounds.x + bulletBounds.width > obstacleBounds.x &&
         bulletBounds.y < obstacleBounds.y + obstacleBounds.height &&
-        bulletBounds.y + bulletBounds.height > obstacleBounds.y) {
+        bulletBounds.y + bulletBounds.height > obstacleBounds.y
+      ) {
         return true;
       }
     }

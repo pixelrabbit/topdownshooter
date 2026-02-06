@@ -23,11 +23,9 @@ export class BGM {
     // Fade out then stop current music
     if (this.current) {
       const current = this.current;
-      animate(current, { volume: 0 }, { duration: 1, ease: "linear" }).then(
-        () => {
-          current.stop();
-        },
-      );
+      animate(current, { volume: 0 }, { duration: 1, ease: "linear" }).then(() => {
+        current.stop();
+      });
     }
 
     // Find out the new instance to be played
@@ -37,11 +35,7 @@ export class BGM {
     this.currentAlias = alias;
     this.current.play({ loop: true, ...options });
     this.current.volume = 0;
-    animate(
-      this.current,
-      { volume: this.volume },
-      { duration: 1, ease: "linear" },
-    );
+    animate(this.current, { volume: this.volume }, { duration: 1, ease: "linear" });
   }
 
   /** Get background music volume */

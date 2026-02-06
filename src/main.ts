@@ -20,6 +20,4 @@ import { GameStage } from "./app/stage";
   app.ticker.add(() => {
     gameStage.update(app.ticker);
   });
-
-
 })();

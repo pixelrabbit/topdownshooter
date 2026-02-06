@@ -19,8 +19,12 @@ export class Player extends Character {
     this.addChild(this.reticle);
 
     // Event listeners
-    window.addEventListener("keydown", (e) => { this.keys[e.code] = true; });
-    window.addEventListener("keyup", (e) => { this.keys[e.code] = false; });
+    window.addEventListener("keydown", (e) => {
+      this.keys[e.code] = true;
+    });
+    window.addEventListener("keyup", (e) => {
+      this.keys[e.code] = false;
+    });
     window.addEventListener("mousedown", (e) => {
       if (e.button === 0) this.isFiring = true;
     });
@@ -60,10 +64,12 @@ export class Player extends Character {
     const playerBounds = this.getHitbox();
     for (const enemy of enemies) {
       const enemyBounds = enemy.getHitbox();
-      if (playerBounds.x < enemyBounds.x + enemyBounds.width &&
+      if (
+        playerBounds.x < enemyBounds.x + enemyBounds.width &&
         playerBounds.x + playerBounds.width > enemyBounds.x &&
         playerBounds.y < enemyBounds.y + enemyBounds.height &&
-        playerBounds.y + playerBounds.height > enemyBounds.y) {
+        playerBounds.y + playerBounds.height > enemyBounds.y
+      ) {
         return true;
       }
     }
@@ -98,6 +104,5 @@ export class Player extends Character {
       this.fire();
       this.lastFired = Date.now();
     }
-
   }
 }

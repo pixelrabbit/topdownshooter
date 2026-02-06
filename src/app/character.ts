@@ -18,7 +18,9 @@ export abstract class Character extends Container {
     this.maxHealth = health;
 
     const hitbox = new Graphics();
-    hitbox.rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height).stroke({ width: 4, color: hitboxColor });
+    hitbox
+      .rect(-texture.width / 2, -texture.height / 2, texture.width, texture.height)
+      .stroke({ width: 4, color: hitboxColor });
     this.addChild(hitbox);
 
     this.sprite = new Sprite(texture);
@@ -35,10 +37,12 @@ export abstract class Character extends Container {
     for (const obstacle of obstacles) {
       const obstacleBounds = obstacle.getBounds().rectangle;
 
-      if (bounds.x < obstacleBounds.x + obstacleBounds.width &&
+      if (
+        bounds.x < obstacleBounds.x + obstacleBounds.width &&
         bounds.x + bounds.width > obstacleBounds.x &&
         bounds.y < obstacleBounds.y + obstacleBounds.height &&
-        bounds.y + bounds.height > obstacleBounds.y) {
+        bounds.y + bounds.height > obstacleBounds.y
+      ) {
         return true;
       }
     }
