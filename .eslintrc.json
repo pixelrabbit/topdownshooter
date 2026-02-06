@@ -10,5 +10,12 @@
     "browser": true,
     "es2021": true,
     "node": true
-  }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    "dist/",
+    "*.d.ts",
+    "*.config.js",
+    "src/engine/"
+  ]
 }
