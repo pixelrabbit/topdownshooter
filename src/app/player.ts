@@ -1,4 +1,4 @@
-import { Graphics, Texture, Ticker } from 'pixi.js';
+import { Graphics, Texture, Ticker, PointData } from 'pixi.js';
 import { Bullet } from './bullet';
 import { colors } from './variables';
 import { Enemy } from './enemy';
@@ -21,16 +21,17 @@ export class Player extends Character {
     // Event listeners
     window.addEventListener('keydown', (e) => { this.keys[e.code] = true; });
     window.addEventListener('keyup', (e) => { this.keys[e.code] = false; });
-    window.addEventListener('mousemove', (e) => {
-      this.mousePos.x = e.clientX;
-      this.mousePos.y = e.clientY;
-    });
     window.addEventListener('mousedown', (e) => {
       if (e.button === 0) this.isFiring = true;
     });
     window.addEventListener('mouseup', (e) => {
       if (e.button === 0) this.isFiring = false;
     });
+  }
+
+  public setMousePosition(position: PointData): void {
+    this.mousePos.x = position.x;
+    this.mousePos.y = position.y;
   }
 
   protected fire() {
@@ -69,7 +70,7 @@ export class Player extends Character {
     return false;
   }
 
-  public update(ticker: Ticker, screenWidth: number, screenHeight: number, obstacles: Graphics[], enemies: Enemy[]) {
+  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Graphics[], enemies: Enemy[]) {
     const dt = ticker.deltaTime;
     const oldX = this.x;
     const oldY = this.y;
@@ -89,7 +90,7 @@ export class Player extends Character {
       this.y = oldY;
     }
 
-    this.keepInBounds(screenWidth, screenHeight);
+    this.keepInBounds(worldWidth, worldHeight);
     this.updateReticle();
 
     // Firing

@@ -52,11 +52,11 @@ export abstract class Character extends Container {
   public isDead(): boolean {
     return this.health <= 0;
   }
-  protected keepInBounds(screenWidth: number, screenHeight: number) {
+  protected keepInBounds(worldWidth: number, worldHeight: number) {
     const halfWidth = this.sprite.width / 2;
     const halfHeight = this.sprite.height / 2;
-    this.x = Math.max(halfWidth, Math.min(screenWidth - halfWidth, this.x));
-    this.y = Math.max(halfHeight, Math.min(screenHeight - halfHeight, this.y));
+    this.x = Math.max(halfWidth, Math.min(worldWidth - halfWidth, this.x));
+    this.y = Math.max(halfHeight, Math.min(worldHeight - halfHeight, this.y));
   }
 
   protected abstract fire(): void;

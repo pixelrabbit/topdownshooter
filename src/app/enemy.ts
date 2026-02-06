@@ -33,7 +33,9 @@ export class Enemy extends Character {
       enemyBounds.y + enemyBounds.height > playerBounds.y;
   }
 
-  public update(ticker: Ticker, screenWidth: number, screenHeight: number, obstacles: Graphics[]) {
+  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Graphics[]) {
+    // if (!this.player || this.player.isDead()) return; // Stop updating if player is dead
+
     const dt = ticker.deltaTime;
     const oldX = this.x;
     const oldY = this.y;
@@ -61,7 +63,7 @@ export class Enemy extends Character {
       }
     }
 
-    this.keepInBounds(screenWidth, screenHeight);
+    this.keepInBounds(worldWidth, worldHeight);
 
     // Firing logic
     if (distance > 50 && Date.now() - this.lastFired > this.fireRate) { // Don't fire if too close
