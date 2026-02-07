@@ -3,6 +3,7 @@ import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Character } from "./character";
 import { colors } from "./variables";
+import type { Obstacle } from "./buildings";
 
 export class Enemy extends Character {
   private pursuitRadius = 600;
@@ -37,7 +38,7 @@ export class Enemy extends Character {
     );
   }
 
-  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Graphics[]) {
+  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Obstacle[]) {
     // if (!this.player || this.player.isDead()) return; // Stop updating if player is dead
 
     const dt = ticker.deltaTime;

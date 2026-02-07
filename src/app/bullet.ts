@@ -1,5 +1,6 @@
 import { Graphics } from "pixi.js";
 import { Character } from "./character";
+import type { Obstacle } from "./buildings";
 
 export class Bullet extends Graphics {
   public velocity = { x: 0, y: 0 };
@@ -35,7 +36,7 @@ export class Bullet extends Graphics {
     );
   }
 
-  public isColliding(obstacles: Graphics[]): boolean {
+  public isColliding(obstacles: Obstacle[]): boolean {
     const bulletBounds = this.getBounds().rectangle;
     for (const obstacle of obstacles) {
       const obstacleBounds = obstacle.getBounds().rectangle;

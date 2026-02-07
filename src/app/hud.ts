@@ -1,5 +1,6 @@
 import { Container, Graphics, Text, TextStyle } from "pixi.js";
 import type { Player } from "./player";
+import type { Homebase, Obstacle } from "./buildings";
 
 export class Minimap extends Container {
   private cameraRect: Graphics;
@@ -48,7 +49,8 @@ export class Minimap extends Container {
     this.addChild(this.playerDot);
   }
 
-  public setObstacles(obstacles: Graphics[]): void {
+
+  public setObstacles(obstacles: Obstacle[]): void {
     this.obstacleContainer.removeChildren();
     for (const obstacle of obstacles) {
       const obstacleRep = new Graphics()
@@ -61,6 +63,19 @@ export class Minimap extends Container {
         .fill({ color: 0x888888 }); // Grey for obstacles
       this.obstacleContainer.addChild(obstacleRep);
     }
+  }
+
+  public setHomebase(homebase: Homebase): void {
+    const homebaseRep = new Graphics()
+      .rect(
+        homebase.x * this.minimapScale,
+        homebase.y * this.minimapScale,
+        homebase.width * this.minimapScale,
+        homebase.height * this.minimapScale
+      )
+      .fill({ color: 0x0000ff }); // Blue for homebase
+    // Add to the same container as obstacles for simplicity
+    this.obstacleContainer.addChild(homebaseRep);
   }
 
   public update(player: Player, camera: Container): void {
@@ -85,8 +100,9 @@ export class HUD extends Container {
   constructor() {
     super();
 
-    const background = new Graphics().rect(16, 16, 240, 80).fill({ color: 0x111111 });
-    this.addChild(background);
+    // set container position
+    this.x = 12;
+    this.y = 12;
 
     // Add "bunny" text
     const style = new TextStyle({
@@ -98,7 +114,7 @@ export class HUD extends Container {
     name.x = 0;
     name.y = 0;
     name.origin.set(0);
-    background.addChild(name);
+    this.addChild(name);
 
     // Add 4 red squares in a row
     const squareSize = 16;
@@ -109,7 +125,7 @@ export class HUD extends Container {
       const square = new Graphics()
         .rect(startX + (squareSize + spacing) * i, 24, squareSize, squareSize)
         .fill({ color: 0xff0000 });
-      background.addChild(square);
+      this.addChild(square);
     }
   }
 }

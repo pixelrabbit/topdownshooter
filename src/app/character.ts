@@ -1,5 +1,6 @@
 import { Container, Graphics, Sprite, Texture, Rectangle } from "pixi.js";
 import { Bullet } from "./bullet";
+import type { Obstacle } from "./buildings";
 
 export abstract class Character extends Container {
   protected speed: number;
@@ -32,7 +33,7 @@ export abstract class Character extends Container {
     return this.sprite.getBounds().rectangle;
   }
 
-  public isCollidingWithObstacles(obstacles: Graphics[]): boolean {
+  public isCollidingWithObstacles(obstacles: Obstacle[]): boolean {
     const bounds = this.getHitbox();
     for (const obstacle of obstacles) {
       const obstacleBounds = obstacle.getBounds().rectangle;

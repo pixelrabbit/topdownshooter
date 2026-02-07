@@ -2,6 +2,7 @@ import { Assets, Container, Ticker, Graphics, FederatedPointerEvent, Rectangle, 
 import { Player } from "./player";
 import { HUD, Minimap } from "./hud";
 import { Enemy } from "./enemy";
+import { Homebase, Obstacle } from "./buildings";
 
 interface ObstacleData {
   x: number;
@@ -18,9 +19,10 @@ export class GameStage extends Container {
   private minimap: Minimap;
   private readonly screenWidth: number;
   private readonly screenHeight: number;
-  private readonly worldWidth = 2400;
-  private readonly worldHeight = 1600;
+  private readonly worldWidth = 2800;
+  private readonly worldHeight = 2000;
   private world: Container;
+  private homebase!: Homebase;
 
   constructor(screenWidth: number, screenHeight: number) {
     super();
@@ -61,19 +63,6 @@ export class GameStage extends Container {
     });
     this.world.addChild(background);
 
-    // // Add a background grid to the world
-    // const grid = new Graphics();
-    // grid.lineStyle(2, 0xcccccc, 0.5);
-    // for (let i = 0; i < this.worldWidth; i += 100) {
-    //   grid.moveTo(i, 0);
-    //   grid.lineTo(i, this.worldHeight);
-    // }
-    // for (let i = 0; i < this.worldHeight; i += 100) {
-    //   grid.moveTo(0, i);
-    //   grid.lineTo(this.worldWidth, i);
-    // }
-    // this.world.addChild(grid);
-
     // Load the bunny player
     const texture = await Assets.load("https://pixijs.com/assets/bunny.png");
     this.player = new Player(texture);
@@ -93,6 +82,15 @@ export class GameStage extends Container {
 
     this.minimap.setObstacles(this.obstacles);
 
+    // BASE
+    this.homebase = new Homebase();
+    this.homebase.x = 120;
+    this.homebase.y = 120;
+    this.world.addChild(this.homebase);
+    this.minimap.setHomebase(this.homebase);
+    this.obstacles.push(this.homebase);
+
+
     // ENEMIES
     for (let i = 0; i < this.enemiesNumber; i++) {
       const enemy = new Enemy(texture, this.player);
@@ -109,10 +107,10 @@ export class GameStage extends Container {
   }
 
   // OBSTACLES
-  private obstacles: Graphics[] = [];
+  private obstacles: Obstacle[] = [];
   private createObstacles(obstacleData: ObstacleData[]): void {
     obstacleData.forEach((data: ObstacleData) => {
-      const obstacle = new Graphics().rect(0, 0, data.w, data.h).stroke({ width: 4, color: 0x000000 });
+      const obstacle = new Obstacle(data.w, data.h, 0x333333);
       obstacle.x = data.x;
       obstacle.y = data.y;
 

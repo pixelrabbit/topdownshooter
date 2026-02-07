@@ -3,6 +3,7 @@ import { Bullet } from "./bullet";
 import { colors } from "./variables";
 import { Enemy } from "./enemy";
 import { Character } from "./character";
+import type { Obstacle } from "./buildings";
 
 export class Player extends Character {
   private keys: Record<string, boolean> = {};
@@ -76,7 +77,7 @@ export class Player extends Character {
     return false;
   }
 
-  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Graphics[], enemies: Enemy[]) {
+  public update(ticker: Ticker, worldWidth: number, worldHeight: number, obstacles: Obstacle[], enemies: Enemy[]) {
     const dt = ticker.deltaTime;
     const oldX = this.x;
     const oldY = this.y;
