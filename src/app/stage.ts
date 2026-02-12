@@ -1,4 +1,4 @@
-import { Assets, Container, Ticker, Graphics, FederatedPointerEvent, Rectangle, TilingSprite } from "pixi.js";
+import { Assets, Container, Ticker, FederatedPointerEvent, Rectangle, TilingSprite } from "pixi.js";
 import { Player } from "./player";
 import { HUD, Minimap } from "./hud";
 import { Enemy } from "./enemy";

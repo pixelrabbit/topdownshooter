@@ -1,4 +1,4 @@
-import { Graphics, Texture, Ticker } from "pixi.js";
+import { Texture, Ticker } from "pixi.js";
 import { Bullet } from "./bullet";
 import { Player } from "./player";
 import { Character } from "./character";
